@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <title>HomeController Test Suite</title>
+        <script>
+            function openSocket() {
+                socket = new WebSocket('wss://api.bunghole.lol:4434');
+
+                socket.onopen = (e) => {
+                    updateMsg('Socket opened!');
+                };
+
+                socket.onmessage = (e) => {
+                    updateMsg('Received message: ' + e.data);
+                };
+
+                socket.onclose = (e) => {
+                    updateMsg('Socket closed!');
+                };
+
+                socket.onerror = (err) => {
+                    updateMsg('Error: ' + err.message);
+                };
+            }
+
+            function closeSocket() {
+                socket.close();
+            }
+
+            function sendMessage() {
+                socket.send(document.getElementById('ws-msg').value)
+            }
+
+            function updateMsg(msg) {
+                console.log('test');
+                document.getElementById('msg').innerHTML = msg;
+            }
+
+            function test() {
+                updateMsg('test');
+            }
+        </script>
+    </head>
+    <body>
+        <h1>HOMECONTROLLER TEST SUITE</h1>
+        <p>API written in C++</p>
+        <br />
+        <span id="msg">Waiting for message...</span>
+        <br />
+        <br />
+        <hr />
+        <br />
+        <button onclick="openSocket()">Open Socket</button>
+        <button onclick="closeSocket()">Close Socket</button>
+        <br />
+        <br />
+        <hr />
+        <input id="ws-msg" type="text" placeholder="WebSocket message..."/>
+        <button onclick="sendMessage()">Send</button>
+        <br />
+        <br />
+        <hr />
+        <button onclick="test()">Test</button>
+    </body>
+</html>
